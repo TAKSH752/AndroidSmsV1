@@ -1,4 +1,4 @@
-package com.example.smsapp.ui
+package com.example.smsapp.ui.inbox.v1
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -20,7 +20,7 @@ import com.example.smsapp.viewmodel.InboxViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun InboxScreen(
+fun InboxScreenV1(
     viewModel: InboxViewModel = viewModel(),
     goBack: () -> Unit
 ) {
@@ -51,7 +51,7 @@ fun InboxScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Inbox") },
+                title = { Text("Inbox V1") },
                 navigationIcon = {
                     IconButton(onClick = goBack) {
                         Icon(
