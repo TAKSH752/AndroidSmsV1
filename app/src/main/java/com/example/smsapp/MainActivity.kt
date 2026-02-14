@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.smsapp
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -32,7 +32,11 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             MaterialTheme(
-                colorScheme = lightColorScheme()
+                colorScheme = if (android.os.Build.VERSION.SDK_INT >= 31) {
+                    dynamicLightColorScheme(this)
+                } else {
+                    lightColorScheme()
+                }
             ) {
                 SmsScreen()
             }

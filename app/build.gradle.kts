@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.myapplication"
+    namespace = "com.example.smsapp"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
@@ -58,4 +58,6 @@ dependencies {
 
         implementation ("androidx.compose.material3:material3:1.2.1")
         implementation ("androidx.activity:activity-compose:1.8.2")
+
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
 }
