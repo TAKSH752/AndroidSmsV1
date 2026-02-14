@@ -107,3 +107,7 @@ read sms perfect
 1.1.3
 
 inbox v2 perfect
+
+1.1.4
+
+topBar added

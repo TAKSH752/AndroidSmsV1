@@ -1,6 +1,8 @@
 package com.example.smsapp.ui
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -13,13 +15,21 @@ import com.example.smsapp.viewmodel.SmsViewModel
 fun SmsScreen(
     viewModel: SmsViewModel = viewModel(),
     goToInbox: () -> Unit,
-    goToInboxV2: () -> Unit
+    goToInboxV2: () -> Unit,
+    openDrawer: () -> Unit
 ) {
     val state by viewModel.uiState.collectAsState()
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("Material 3 SMS App") })
+            TopAppBar(
+                title = { Text("Material 3 SMS App") },
+                navigationIcon = {
+                    IconButton(onClick = openDrawer) {
+                        Icon(Icons.Default.Menu, contentDescription = "Menu")
+                    }
+                }
+            )
         }
     ) { padding ->
 
