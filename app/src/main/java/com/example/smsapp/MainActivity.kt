@@ -100,11 +100,16 @@ class MainActivity : ComponentActivity() {
                                 }
 
                                 composable("inbox") {
-                                    InboxScreenV1(goBack = { navController.popBackStack() })
+                                    InboxScreenV1(
+                                        openDrawer = {
+                                            scope.launch { drawerState.open() }
+                                        })
                                 }
 
                                 composable("inbox_v2") {
-                                    InboxScreenV2(goBack = { navController.popBackStack() })
+                                    InboxScreenV2(                                        openDrawer = {
+                                        scope.launch { drawerState.open() }
+                                    })
                                 }
                             }
                         }

@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -23,7 +24,7 @@ import com.example.smsapp.viewmodel.InboxViewModel
 @Composable
 fun InboxScreenV2(
     viewModel: InboxViewModel = viewModel(),
-    goBack: () -> Unit
+    openDrawer: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -55,11 +56,8 @@ fun InboxScreenV2(
             TopAppBar(
                 title = { Text("Inbox V2") },
                 navigationIcon = {
-                    IconButton(onClick = goBack) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Back"
-                        )
+                    IconButton(onClick = openDrawer) {
+                        Icon(Icons.Default.Menu, contentDescription = "Menu")
                     }
                 }
             )

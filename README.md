@@ -111,3 +111,7 @@ inbox v2 perfect
 1.1.4
 
 topBar added
+
+1.1.5
+
+topBar perfect for all
