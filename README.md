@@ -119,3 +119,7 @@ topBar perfect for all
 1.1.6
 
 topBar nice colours
+
+1.1.7
+
+topBar no crash

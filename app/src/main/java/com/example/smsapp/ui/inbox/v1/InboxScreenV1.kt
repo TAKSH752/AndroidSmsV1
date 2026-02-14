@@ -34,7 +34,7 @@ fun InboxScreenV1(
             contract = ActivityResultContracts.RequestPermission()
         ) { isGranted ->
             if (isGranted) {
-                viewModel.loadMessages()
+                viewModel.loadMessages(context)
             }
         }
 
@@ -44,7 +44,7 @@ fun InboxScreenV1(
                 Manifest.permission.READ_SMS
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            viewModel.loadMessages()
+            viewModel.loadMessages(context)
         } else {
             permissionLauncher.launch(Manifest.permission.READ_SMS)
         }

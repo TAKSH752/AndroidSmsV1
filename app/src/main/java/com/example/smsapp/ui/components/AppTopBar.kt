@@ -17,23 +17,16 @@ fun AppTopBar(
     TopAppBar(
         title = { Text(title) },
         navigationIcon = {
-            when {
-                showBack && onBackClick != null -> {
-                    IconButton(onClick = onBackClick) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Back"
-                        )
-                    }
+            if (showBack && onBackClick != null) {
+                IconButton(onClick = onBackClick) {
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Back")
                 }
-                !showBack && onMenuClick != null -> {
-                    IconButton(onClick = onMenuClick) {
-                        Icon(
-                            imageVector = Icons.Default.Menu,
-                            contentDescription = "Menu"
-                        )
-                    }
+            } else if (!showBack && onMenuClick != null) {
+                IconButton(onClick = onMenuClick) {
+                    Icon(Icons.Default.Menu, contentDescription = "Menu")
                 }
+            } else {
+                // Do nothing safely
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(

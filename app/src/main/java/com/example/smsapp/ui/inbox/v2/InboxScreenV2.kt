@@ -36,7 +36,7 @@ fun InboxScreenV2(
             contract = ActivityResultContracts.RequestPermission()
         ) { isGranted ->
             if (isGranted) {
-                groupedMessages = viewModel.getGroupedMessages()
+                groupedMessages = viewModel.getGroupedMessages(context)
             }
         }
 
@@ -46,7 +46,7 @@ fun InboxScreenV2(
                 Manifest.permission.READ_SMS
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            groupedMessages = viewModel.getGroupedMessages()
+            groupedMessages = viewModel.getGroupedMessages(context)
         } else {
             permissionLauncher.launch(Manifest.permission.READ_SMS)
         }

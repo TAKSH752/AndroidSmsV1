@@ -1,26 +1,31 @@
 package com.example.smsapp
 
+
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.*
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.NavigationDrawerItemDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDrawerState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-
-
-import androidx.navigation.compose.*
-import com.example.smsapp.ui.inbox.v1.InboxScreenV1
 import com.example.smsapp.ui.SmsScreen
+import com.example.smsapp.ui.inbox.v1.InboxScreenV1
 import com.example.smsapp.ui.inbox.v2.InboxScreenV2
 import kotlinx.coroutines.launch
-
 
 class MainActivity : ComponentActivity() {
     private val requestPermissionLauncher =
@@ -49,47 +54,32 @@ class MainActivity : ComponentActivity() {
                             drawerState = drawerState,
                             drawerContent = {
                                 ModalDrawerSheet {
+                                    val currentBackStackEntry by navController.currentBackStackEntryAsState()
+                                    val currentRoute = currentBackStackEntry?.destination?.route ?: ""
 
-                                    Text(
-                                        text = "Menu",
-                                        style = MaterialTheme.typography.titleMedium,
-                                        modifier = Modifier.padding(16.dp)
-                                    )
-
-                                    NavigationDrawerItem(
-                                        label = { Text("Send SMS") },
-                                        selected = false,
-                                        onClick = {
-                                            navController.navigate("send")
-                                            scope.launch { drawerState.close() }
-                                        }
-                                    )
-
-                                    NavigationDrawerItem(
-                                        label = { Text("Inbox V1") },
-                                        selected = false,
-                                        onClick = {
-                                            navController.navigate("inbox")
-                                            scope.launch { drawerState.close() }
-                                        }
-                                    )
-
-                                    NavigationDrawerItem(
-                                        label = { Text("Inbox V2") },
-                                        selected = false,
-                                        onClick = {
-                                            navController.navigate("inbox_v2")
-                                            scope.launch { drawerState.close() }
-                                        }
-                                    )
+                                    AppScreen.drawerItems.forEach { screen ->
+                                        NavigationDrawerItem(
+                                            label = { Text(screen.title) },
+                                            selected = currentRoute == screen.route,
+                                            onClick = {
+                                                navController.navigate(screen.route)
+                                                scope.launch { drawerState.close() }
+                                            },
+                                            colors = NavigationDrawerItemDefaults.colors(
+                                                selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                                selectedTextColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                                selectedIconColor = MaterialTheme.colorScheme.onPrimaryContainer
+                                            )
+                                        )
+                                    }
                                 }
                             }
                         ) {
                             NavHost(
                                 navController = navController,
-                                startDestination = "send"
+                                startDestination = AppScreen.Send.route
                             ) {
-                                composable("send") {
+                                composable(AppScreen.Send.route){
                                     SmsScreen(
                                         openDrawer = {
                                             scope.launch { drawerState.open() }
@@ -97,15 +87,16 @@ class MainActivity : ComponentActivity() {
                                     )
                                 }
 
-                                composable("inbox") {
+                                composable(AppScreen.InboxV1.route) {
                                     InboxScreenV1(
                                         openDrawer = {
                                             scope.launch { drawerState.open() }
                                         })
                                 }
 
-                                composable("inbox_v2") {
-                                    InboxScreenV2(                                        openDrawer = {
+                                composable(AppScreen.InboxV2.route) {
+                                    InboxScreenV2(
+                                        openDrawer = {
                                         scope.launch { drawerState.open() }
                                     })
                                 }
