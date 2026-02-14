@@ -1,4 +1,4 @@
-package com.example.smsapp.ui.inbox.v1
+package com.example.smsapp.ui.incoming.v1
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -7,9 +7,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -22,19 +19,20 @@ import com.example.smsapp.viewmodel.InboxViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun InboxScreenV1(
+fun IncomingScreenV1(
     viewModel: InboxViewModel = viewModel(),
     openDrawer: () -> Unit
 ) {
     val context = LocalContext.current
     val messages by viewModel.messages.collectAsState()
+val commonHeadLabel="Incoming V1"
 
     val permissionLauncher =
         rememberLauncherForActivityResult(
             contract = ActivityResultContracts.RequestPermission()
         ) { isGranted ->
             if (isGranted) {
-                viewModel.loadMessages(context)
+                viewModel.loadIncomingMessages(context)
             }
         }
 
@@ -44,7 +42,7 @@ fun InboxScreenV1(
                 Manifest.permission.READ_SMS
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            viewModel.loadMessages(context)
+            viewModel.loadIncomingMessages(context)
         } else {
             permissionLauncher.launch(Manifest.permission.READ_SMS)
         }
@@ -53,7 +51,7 @@ fun InboxScreenV1(
     Scaffold(
         topBar = {
             AppTopBar(
-                title = "Inbox V1",
+                title = commonHeadLabel,
                 showBack = false,
                 onMenuClick = openDrawer
             )

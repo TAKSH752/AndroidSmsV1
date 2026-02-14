@@ -28,4 +28,18 @@ class InboxViewModel : ViewModel() {
         }
         return repository!!.getGroupedMessages()
     }
+
+    fun loadIncomingMessages(context: Context) {
+        if (repository == null) {
+            repository = SmsReaderRepository(context.applicationContext)
+        }
+        _messages.value = repository!!.getIncomingMessages()
+    }
+
+    fun loadOutgoingMessages(context: Context) {
+        if (repository == null) {
+            repository = SmsReaderRepository(context.applicationContext)
+        }
+        _messages.value = repository!!.getOutgoingMessages()
+    }
 }

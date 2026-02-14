@@ -16,6 +16,10 @@ sealed class AppScreen(
     object InboxIncomingV1 : AppScreen("inbox_incoming_v1", "Incoming V1")
     object InboxIncomingV2 : AppScreen("inbox_incoming_v2", "Incoming V2")
 
+    // Inbox Screens for Outgoing
+    object OutgoingV1 : AppScreen("outgoing_v1", "Outgoing V1")
+    object OutgoingV2 : AppScreen("outgoing_v2", "Outgoing V2")
+
     companion object {
 
         // Grouped drawer structure
@@ -35,7 +39,12 @@ sealed class AppScreen(
                        DrawerSection(
                         title = "Incoming",
                 children = listOf(InboxIncomingV1, InboxIncomingV2)
-            )
+            ),
+
+                DrawerSection(
+                    title = "Outgoing",
+                    children = listOf(OutgoingV1, OutgoingV1)
+                )
             )
     }
 }

@@ -8,6 +8,7 @@ import com.example.smsapp.AppScreen
 import com.example.smsapp.ui.SmsScreen
 import com.example.smsapp.ui.inbox.v1.InboxScreenV1
 import com.example.smsapp.ui.inbox.v2.InboxScreenV2
+import com.example.smsapp.ui.incoming.v1.IncomingScreenV1
 
 @Composable
 fun AppNavHost(
@@ -29,6 +30,10 @@ fun AppNavHost(
 
         composable(AppScreen.InboxV2.route) {
             InboxScreenV2(openDrawer = openDrawer)
+        }
+
+        composable(AppScreen.InboxIncomingV1.route) {
+            IncomingScreenV1(openDrawer = openDrawer)
         }
     }
 }
