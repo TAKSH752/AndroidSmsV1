@@ -1,4 +1,4 @@
-package com.example.smsapp.ui.incoming.v1
+package com.example.smsapp.ui.outgoing.v1
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -19,20 +19,20 @@ import com.example.smsapp.viewmodel.InboxViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IncomingScreenV1(
+fun OutgoingScreenV1(
     viewModel: InboxViewModel = viewModel(),
     openDrawer: () -> Unit
 ) {
     val context = LocalContext.current
     val messages by viewModel.messages.collectAsState()
-val commonHeadLabel="Incoming V1"
+val commonHeadLabel="Outgoing V1"
 
     val permissionLauncher =
         rememberLauncherForActivityResult(
             contract = ActivityResultContracts.RequestPermission()
         ) { isGranted ->
             if (isGranted) {
-                viewModel.loadIncomingMessages(context)
+                viewModel.loadOutgoingMessages(context)
             }
         }
 
@@ -42,7 +42,7 @@ val commonHeadLabel="Incoming V1"
                 Manifest.permission.READ_SMS
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            viewModel.loadIncomingMessages(context)
+            viewModel.loadOutgoingMessages(context)
         } else {
             permissionLauncher.launch(Manifest.permission.READ_SMS)
         }
