@@ -46,7 +46,7 @@ sealed class AppScreen(
 
                 DrawerSection(
                     title = "Incoming",
-                    children = listOf(InboxIncomingV1, InboxIncomingV2)
+                    children = listOf(InboxIncomingV1, InboxIncomingV2, InboxIncomingV3, InboxIncomingV4)
                 ),
 
                 DrawerSection(
