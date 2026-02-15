@@ -1,5 +1,6 @@
 package com.example.smsapp.ui.incoming.v3
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -21,6 +22,10 @@ fun IncomingScreenV3(
 ) {
     val context = LocalContext.current
     var messages by remember { mutableStateOf<List<SmsMessage>>(emptyList()) }
+    var selectedGroup by remember { mutableStateOf(IncomingTimeGroup.TODAY) }
+    val grouped = remember(messages) { groupIncoming(messages) }
+
+    val filteredMessages = grouped[selectedGroup] ?: emptyList()
 
     IncomingPermission(context) {
         messages = loadIncomingSms(context)
@@ -30,10 +35,20 @@ fun IncomingScreenV3(
         topBar = {
             AppTopBar(title = inHeadLabel, showBack = false, onMenuClick = openDrawer)
         }
-    ) { padding ->
-        IncomingListUIForV3(
-            messages = messages,
-            modifier = Modifier.padding(padding).fillMaxSize()
-        )
+    )
+    { padding ->
+        Column(Modifier.padding(padding).fillMaxSize()) {
+
+            IncomingTabsV3(
+                selected = selectedGroup,
+                onSelected = { selectedGroup = it },
+                counts = grouped.mapValues { it.value.size }
+            )
+
+            IncomingListUIForV3(
+                messages = filteredMessages,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
     }
 }
