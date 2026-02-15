@@ -2,8 +2,10 @@ package com.example.smsapp.ui.outgoing.v2
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -16,24 +18,25 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.smsapp.ui.components.AppTopBar
 import com.example.smsapp.viewmodel.InboxViewModel
+import com.example.smsapp.viewmodel.TimeGroup
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OutgoingScreenV2(
     viewModel: InboxViewModel = viewModel(),
     openDrawer: () -> Unit,
-    inHeadLabel: String="Outgoing V2"
+    inHeadLabel: String = "Outgoing V2"
 ) {
     val context = LocalContext.current
-    val messages by viewModel.messages.collectAsState()
+    val grouped by viewModel.grouped.collectAsState()
+    var tab by remember { mutableStateOf(TimeGroup.TODAY) }
 
     val permissionLauncher =
         rememberLauncherForActivityResult(
             contract = ActivityResultContracts.RequestPermission()
         ) { isGranted ->
-            if (isGranted) {
-                viewModel.loadOutgoingMessages(context)
-            }
+            if (isGranted) viewModel.loadOutgoingMessages(context)
         }
 
     LaunchedEffect(Unit) {
@@ -58,39 +61,53 @@ fun OutgoingScreenV2(
         }
     ) { padding ->
 
-        LazyColumn(
+        Column(
             modifier = Modifier
                 .padding(padding)
                 .fillMaxSize()
         ) {
 
-            items(messages) { sms ->
+            TabRow(selectedTabIndex = tab.ordinal) {
+                TimeGroup.values().forEach {
+                    Tab(
+                        selected = tab == it,
+                        onClick = { tab = it },
+                        text = { Text(it.name) }
+                    )
+                }
+            }
 
-                Card(
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth()
-                ) {
-                    Column(modifier = Modifier.padding(12.dp)) {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                items(grouped[tab] ?: emptyList()) { sms ->
 
-                        Text(
-                            text = sms.address,
-                            style = MaterialTheme.typography.titleMedium
-                        )
+                    Card(
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .fillMaxWidth()
+                    ) {
+                        Column(modifier = Modifier.padding(12.dp)) {
 
-                        Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = sms.address,
+                                style = MaterialTheme.typography.titleMedium
+                            )
 
-                        Text(
-                            text = sms.body,
-                            style = MaterialTheme.typography.bodyMedium
-                        )
+                            Spacer(modifier = Modifier.height(4.dp))
 
-                        Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = sms.body,
+                                style = MaterialTheme.typography.bodyMedium
+                            )
 
-                        Text(
-                            text = sms.date,
-                            style = MaterialTheme.typography.labelSmall
-                        )
+                            Spacer(modifier = Modifier.height(4.dp))
+
+                            Text(
+                                text = sms.date,
+                                style = MaterialTheme.typography.labelSmall
+                            )
+                        }
                     }
                 }
             }
