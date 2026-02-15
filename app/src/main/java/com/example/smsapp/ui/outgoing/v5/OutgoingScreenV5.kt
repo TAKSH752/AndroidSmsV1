@@ -1,4 +1,4 @@
-package com.example.smsapp.ui.outgoing.v4
+package com.example.smsapp.ui.outgoing.v5
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -17,21 +17,21 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.smsapp.ui.common.SmsPermissionLoader
 import com.example.smsapp.ui.components.AppTopBar
-import com.example.smsapp.ui.outgoing.components.OutgoingMessageList
 import com.example.smsapp.ui.outgoing.components.OutgoingTabs
 import com.example.smsapp.viewmodel.InboxViewModel
 import com.example.smsapp.viewmodel.SmsViewModel
 import com.example.smsapp.viewmodel.TimeGroup
+import com.example.smsapp.ui.outgoing.v5.OutgoingMessageListV5
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun OutgoingScreenV4(
+fun OutgoingScreenV5(
     viewModel: InboxViewModel = viewModel(),
     smsViewModel: SmsViewModel = viewModel(),
     openDrawer: () -> Unit,
     navigateToSend: (String, String) -> Unit,
-    inHeadLabel: String = "Outgoing V4"
+    inHeadLabel: String = "Outgoing V5"
 ) {
     val grouped by viewModel.grouped.collectAsState()
     var tab by remember { mutableStateOf(TimeGroup.TODAY) }
@@ -63,10 +63,9 @@ fun OutgoingScreenV4(
                 onSelected = { tab = it }
             )
 
-            OutgoingMessageList(
+            OutgoingMessageListV5(
                 messages = grouped[tab] ?: emptyList(),
                 onItemClick = { sms ->
-                    // navigate to send screen with prefilled values
                     smsViewModel.prepareResend(sms)
                     navigateToSend(sms.address, sms.body)
                 }

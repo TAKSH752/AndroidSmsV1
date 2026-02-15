@@ -17,11 +17,11 @@ fun AppNavHost(
         navController = navController,
         startDestination = AppScreen.SendV1.route
     ) {
-        sendGraph(            openDrawer = openDrawer        )
+        sendGraph(openDrawer = openDrawer)
 
-        InboxGraph(            openDrawer = openDrawer        )
+        InboxGraph(openDrawer = openDrawer)
 
-        incomingGraph(            openDrawer = openDrawer        )
+        incomingGraph(openDrawer = openDrawer)
 
         outgoingGraph(
             navController = navController,
