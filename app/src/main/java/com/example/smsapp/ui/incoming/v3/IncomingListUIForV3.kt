@@ -1,4 +1,4 @@
-package com.example.smsapp.ui.incoming.v2
+package com.example.smsapp.ui.incoming.v3
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,7 +11,7 @@ import com.example.smsapp.data.SmsMessage
 
 @Composable
 
-fun IncomingListUIForV2(
+fun IncomingListUIForV3(
     messages: List<SmsMessage>,
     modifier: Modifier = Modifier
 ) {

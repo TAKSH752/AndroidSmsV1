@@ -1,4 +1,4 @@
-package com.example.smsapp.ui.incoming.v2
+package com.example.smsapp.ui.incoming.common
 
 import android.Manifest
 import android.content.Context

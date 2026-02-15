@@ -7,6 +7,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.example.smsapp.AppScreen
 import com.example.smsapp.ui.incoming.v1.IncomingScreenV1
+import com.example.smsapp.ui.incoming.v2.IncomingScreenV2
+import com.example.smsapp.ui.incoming.v3.IncomingScreenV3
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.incomingGraph(
@@ -15,5 +17,13 @@ fun NavGraphBuilder.incomingGraph(
 
     composable(AppScreen.InboxIncomingV1.route) {
         IncomingScreenV1(openDrawer = openDrawer)
+    }
+
+    composable(AppScreen.InboxIncomingV2.route) {
+        IncomingScreenV2(openDrawer = openDrawer)
+    }
+
+    composable(AppScreen.InboxIncomingV3.route) {
+        IncomingScreenV3(openDrawer = openDrawer)
     }
 }

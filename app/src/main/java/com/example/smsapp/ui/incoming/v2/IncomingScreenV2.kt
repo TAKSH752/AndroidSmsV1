@@ -1,99 +1,38 @@
-package com.example.smsapp.ui.incoming.v1
+package com.example.smsapp.ui.incoming.v2
 
-import android.Manifest
-import android.content.pm.PackageManager
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.smsapp.ui.components.AppTopBar
-import com.example.smsapp.viewmodel.InboxViewModel
+import com.example.smsapp.data.SmsMessage
+import com.example.smsapp.ui.incoming.common.IncomingPermission
+import com.example.smsapp.ui.incoming.common.loadIncomingSms
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IncomingScreenV1(
-    viewModel: InboxViewModel = viewModel(),
-    openDrawer: () -> Unit
+fun IncomingScreenV2(
+    openDrawer: () -> Unit,
+    inHeadLabel: String = "Incoming V2"
 ) {
     val context = LocalContext.current
-    val messages by viewModel.messages.collectAsState()
-val commonHeadLabel="Incoming V1"
+    var messages by remember { mutableStateOf<List<SmsMessage>>(emptyList()) }
 
-    val permissionLauncher =
-        rememberLauncherForActivityResult(
-            contract = ActivityResultContracts.RequestPermission()
-        ) { isGranted ->
-            if (isGranted) {
-                viewModel.loadIncomingMessages(context)
-            }
-        }
-
-    LaunchedEffect(Unit) {
-        if (ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.READ_SMS
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            viewModel.loadIncomingMessages(context)
-        } else {
-            permissionLauncher.launch(Manifest.permission.READ_SMS)
-        }
+    IncomingPermission(context) {
+        messages = loadIncomingSms(context)
     }
 
     Scaffold(
         topBar = {
-            AppTopBar(
-                title = commonHeadLabel,
-                showBack = false,
-                onMenuClick = openDrawer
-            )
+            AppTopBar(title = inHeadLabel, showBack = false, onMenuClick = openDrawer)
         }
     ) { padding ->
-
-        LazyColumn(
-            modifier = Modifier
-                .padding(padding)
-                .fillMaxSize()
-        ) {
-
-            items(messages) { sms ->
-
-                Card(
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth()
-                ) {
-                    Column(modifier = Modifier.padding(12.dp)) {
-
-                        Text(
-                            text = sms.address,
-                            style = MaterialTheme.typography.titleMedium
-                        )
-
-                        Spacer(modifier = Modifier.height(4.dp))
-
-                        Text(
-                            text = sms.body,
-                            style = MaterialTheme.typography.bodyMedium
-                        )
-
-                        Spacer(modifier = Modifier.height(4.dp))
-
-                        Text(
-                            text = sms.date,
-                            style = MaterialTheme.typography.labelSmall
-                        )
-                    }
-                }
-            }
-        }
+        IncomingListUIForV2(
+            messages = messages,
+            modifier = Modifier.padding(padding).fillMaxSize()
+        )
     }
 }

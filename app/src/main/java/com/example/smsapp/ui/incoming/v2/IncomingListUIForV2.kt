@@ -11,7 +11,7 @@ import com.example.smsapp.data.SmsMessage
 
 @Composable
 
-fun IncomingListUIForV1(
+fun IncomingListUIForV2(
     messages: List<SmsMessage>,
     modifier: Modifier = Modifier
 ) {

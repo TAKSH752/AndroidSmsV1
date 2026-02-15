@@ -1,4 +1,4 @@
-package com.example.smsapp.ui.incoming.v2
+package com.example.smsapp.ui.incoming.v3
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -11,12 +11,13 @@ import com.example.smsapp.ui.components.AppTopBar
 import com.example.smsapp.data.SmsMessage
 import com.example.smsapp.ui.incoming.common.IncomingPermission
 import com.example.smsapp.ui.incoming.common.loadIncomingSms
+import com.example.smsapp.ui.incoming.v2.IncomingListUIForV2
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IncomingScreenV2(
+fun IncomingScreenV3(
     openDrawer: () -> Unit,
-    inHeadLabel: String = "Incoming V2"
+    inHeadLabel: String = "Incoming V3"
 ) {
     val context = LocalContext.current
     var messages by remember { mutableStateOf<List<SmsMessage>>(emptyList()) }
@@ -30,7 +31,7 @@ fun IncomingScreenV2(
             AppTopBar(title = inHeadLabel, showBack = false, onMenuClick = openDrawer)
         }
     ) { padding ->
-        IncomingListUIForV2(
+        IncomingListUIForV3(
             messages = messages,
             modifier = Modifier.padding(padding).fillMaxSize()
         )
