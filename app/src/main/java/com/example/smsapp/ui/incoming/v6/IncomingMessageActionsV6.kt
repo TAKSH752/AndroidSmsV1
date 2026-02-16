@@ -8,7 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
 
 @Composable
-fun IncomingMessageActionsV5(
+fun IncomingMessageActionsV6(
     sms: SmsMessage,
     onOpenClick: (SmsMessage) -> Unit
 ) {

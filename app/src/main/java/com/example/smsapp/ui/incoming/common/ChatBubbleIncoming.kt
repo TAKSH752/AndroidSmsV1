@@ -1,4 +1,4 @@
-package com.example.smsapp.ui.incoming.v6
+package com.example.smsapp.ui.incoming.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

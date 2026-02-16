@@ -13,6 +13,8 @@ import com.example.smsapp.ui.incoming.v4.IncomingScreenV4
 import com.example.smsapp.ui.incoming.v5.IncomingScreenV5
 import androidx.navigation.navArgument
 import com.example.smsapp.ui.incoming.v5.IncomingConversationThreadScreenV5
+import com.example.smsapp.ui.incoming.v6.IncomingConversationThreadScreenV6
+import com.example.smsapp.ui.incoming.v6.IncomingScreenV6
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.incomingGraph(
@@ -69,6 +71,30 @@ fun NavGraphBuilder.incomingGraph(
         val address = backStack.arguments?.getString("address") ?: ""
 
         IncomingConversationThreadScreenV5(
+            address = address,
+            openDrawer = { navController.popBackStack() }
+        )
+    }
+
+    composable(AppScreen.InboxIncomingV6.route) {
+        IncomingScreenV6(
+            openDrawer = openDrawer,
+            navigateToThread = { address ->
+                navController.navigate("incoming_v6_thread?address=$address")
+            }
+        )
+    }
+
+    composable(
+        route = "incoming_v6_thread?address={address}",
+        arguments = listOf(
+            navArgument("address") { defaultValue = "" }
+        )
+    ) { backStack ->
+
+        val address = backStack.arguments?.getString("address") ?: ""
+
+        IncomingConversationThreadScreenV6(
             address = address,
             openDrawer = { navController.popBackStack() }
         )

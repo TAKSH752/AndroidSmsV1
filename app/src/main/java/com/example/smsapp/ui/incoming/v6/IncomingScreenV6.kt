@@ -15,14 +15,15 @@ import androidx.compose.ui.platform.LocalContext
 import com.example.smsapp.data.SmsMessage
 import com.example.smsapp.ui.components.AppTopBar
 import com.example.smsapp.ui.incoming.common.IncomingPermission
+import com.example.smsapp.ui.incoming.common.groupBySender
 import com.example.smsapp.ui.incoming.common.loadIncomingSms
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IncomingScreenV5(
+fun IncomingScreenV6(
     openDrawer: () -> Unit,
     navigateToThread: (String) -> Unit,
-    inHeadLabel: String = "Incoming V5"
+    inHeadLabel: String = "Incoming V6"
 )
 {
     val context = LocalContext.current
@@ -42,7 +43,7 @@ fun IncomingScreenV5(
     { padding ->
         Column(Modifier.padding(padding).fillMaxSize()) {
 
-            IncomingConversationListV5(
+            IncomingConversationListV6(
                 conversations = conversations,
                 modifier = Modifier.fillMaxSize(),
                 onOpenConversation = { address->

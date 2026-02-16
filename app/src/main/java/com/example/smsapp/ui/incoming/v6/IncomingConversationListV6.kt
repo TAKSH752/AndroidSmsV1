@@ -8,7 +8,7 @@ import com.example.smsapp.ui.incoming.common.IncomingEmptyState
 import com.example.smsapp.ui.incoming.v5.model.IncomingConversation
 
 @Composable
-fun IncomingConversationListV5(
+fun IncomingConversationListV6(
     conversations: List<IncomingConversation>,
     modifier: Modifier = Modifier,
     onOpenConversation: (String) -> Unit
@@ -21,7 +21,7 @@ fun IncomingConversationListV5(
 
     LazyColumn(modifier = modifier) {
         items(conversations) { convo ->
-            IncomingConversationItemV5(convo, onOpenConversation)
+            IncomingConversationItemV6(convo, onOpenConversation)
         }
     }
 }

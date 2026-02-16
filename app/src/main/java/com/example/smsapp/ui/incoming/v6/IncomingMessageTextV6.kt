@@ -12,7 +12,7 @@ import com.example.smsapp.data.SmsMessage
 import com.example.smsapp.ui.common.SmartTimeFormatter
 
 @Composable
-fun IncomingMessageTextV5(
+fun IncomingMessageTextV6(
     sms: SmsMessage,
     modifier: Modifier = Modifier
 ) {

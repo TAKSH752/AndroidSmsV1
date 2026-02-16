@@ -1,4 +1,4 @@
-package com.example.smsapp.ui.incoming.v5
+package com.example.smsapp.ui.incoming.common
 
 import com.example.smsapp.data.SmsMessage
 import com.example.smsapp.ui.incoming.v5.model.IncomingConversation

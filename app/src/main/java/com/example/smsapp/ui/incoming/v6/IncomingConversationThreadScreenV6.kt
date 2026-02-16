@@ -7,15 +7,15 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import com.example.smsapp.data.SmsMessage
 import com.example.smsapp.ui.components.AppTopBar
+import com.example.smsapp.ui.incoming.common.ChatBubbleIncoming
 import com.example.smsapp.ui.incoming.common.loadIncomingSms
 import com.example.smsapp.utils.normalizeAddress
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IncomingConversationThreadScreenV5(
+fun IncomingConversationThreadScreenV6(
     address: String,
     openDrawer: () -> Unit
 ) {
@@ -40,10 +40,7 @@ fun IncomingConversationThreadScreenV5(
                 .fillMaxSize()
         ) {
             items(messages) { sms ->
-                Text(
-                    text = sms.body,
-                    modifier = Modifier.padding(12.dp)
-                )
+                ChatBubbleIncoming(sms.body)
             }
         }
     }
