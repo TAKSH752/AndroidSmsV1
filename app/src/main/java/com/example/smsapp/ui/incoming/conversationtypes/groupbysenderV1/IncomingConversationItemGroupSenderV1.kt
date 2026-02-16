@@ -1,19 +1,19 @@
-package com.example.smsapp.ui.incoming.conversationtypes.groupbysender
+package com.example.smsapp.ui.incoming.conversationtypes.groupbysenderV1
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.smsapp.ui.common.SmartTimeFormatter
 import com.example.smsapp.ui.incoming.model.IncomingConversation
 
 @Composable
-fun IncomingConversationItemGroupSender(
+fun IncomingConversationItemGroupSenderV1(
     convo: IncomingConversation,
     onOpenConversation: (String) -> Unit
 ) {
@@ -23,46 +23,55 @@ fun IncomingConversationItemGroupSender(
             .fillMaxWidth(),
         shape = RoundedCornerShape(18.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
+        border = BorderStroke(
+            0.6.dp,
+            MaterialTheme.colorScheme.outlineVariant
         )
     ) {
         Row(
             modifier = Modifier
-                .padding(14.dp)
+                .padding(horizontal = 12.dp, vertical = 10.dp)
                 .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+            verticalAlignment = Alignment.CenterVertically
         ) {
 
             Column(Modifier.weight(1f)) {
 
-                Text(convo.address, style = MaterialTheme.typography.titleMedium)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = convo.address,
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    )
 
-                Spacer(Modifier.height(6.dp))
+                    Text(
+                        text = SmartTimeFormatter.format(convo.lastTimestamp),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
 
-                Text(convo.lastMessage, style = MaterialTheme.typography.bodyMedium)
-
-                Spacer(Modifier.height(8.dp))
+                Spacer(Modifier.height(4.dp))
 
                 Text(
-                    SmartTimeFormatter.format(convo.lastTimestamp),
-                    style = MaterialTheme.typography.labelSmall,
+                    text = convo.lastMessage,
+                    style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
 
-            Column(horizontalAlignment = Alignment.End) {
-                Text(
-                    text = "${convo.count}",
-                    style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.primary
-                )
+            Spacer(Modifier.width(10.dp))
 
-                IconButton(onClick = {
-                    onOpenConversation(convo.address)
-                }) {
-                    Icon(Icons.Default.Send, contentDescription = "Open")
-                }
-            }
+            UnreadCountButton(
+                count = convo.count,
+                onClick = { onOpenConversation(convo.address) }
+            )
         }
     }
 }

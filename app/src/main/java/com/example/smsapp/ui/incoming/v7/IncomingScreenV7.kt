@@ -18,13 +18,14 @@ import com.example.smsapp.ui.incoming.common.IncomingPermission
 import com.example.smsapp.ui.incoming.common.groupBySender
 import com.example.smsapp.ui.incoming.common.loadIncomingSms
 import com.example.smsapp.ui.incoming.conversationtypes.groupbysender.IncomingConversationListGroupSender
+import com.example.smsapp.ui.incoming.conversationtypes.groupbysenderV1.IncomingConversationListGroupSenderV1
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun IncomingScreenV6(
+fun IncomingScreenV7(
     openDrawer: () -> Unit,
     navigateToThread: (String) -> Unit,
-    inHeadLabel: String = "Incoming V6"
+    inHeadLabel: String = "Incoming V7"
 ) {
     val context = LocalContext.current
     var messages by remember { mutableStateOf<List<SmsMessage>>(emptyList()) }
@@ -44,7 +45,7 @@ fun IncomingScreenV6(
         Column(Modifier
             .padding(padding)
             .fillMaxSize()) {
-            IncomingConversationListGroupSender(
+            IncomingConversationListGroupSenderV1(
                 conversations = conversations,
                 modifier = Modifier.fillMaxSize(),
                 onOpenConversation = { address ->
