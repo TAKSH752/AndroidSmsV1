@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.example.smsapp.data.SmsMessage
 import com.example.smsapp.ui.components.AppTopBar
 import com.example.smsapp.ui.incoming.common.loadIncomingSms
+import com.example.smsapp.utils.normalizeAddress
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -23,7 +24,8 @@ fun IncomingConversationThreadScreenV5(
     var messages by remember { mutableStateOf<List<SmsMessage>>(emptyList()) }
 
     LaunchedEffect(Unit) {
-        messages = loadIncomingSms(context).filter { it.address == address }
+        messages = loadIncomingSms(context)
+            .filter { normalizeAddress(it.address) == address }
     }
 
     Scaffold(
